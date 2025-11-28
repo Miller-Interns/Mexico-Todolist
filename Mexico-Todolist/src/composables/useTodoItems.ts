@@ -4,11 +4,41 @@ export function useTodoItems() {
   const store = useTodoStore();
 
   const addItem = (categoryId: string, title: string) => {
-    store.addItem(categoryId, title);
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return;
+
+    const category = store.categories.find((cat) => cat.id === categoryId);
+    if (!category) return;
+
+    const exists = category.items.some(
+      (item) => item.title.toLowerCase() === trimmedTitle.toLowerCase()
+    );
+    if (exists) {
+      alert('Item already exists in this category');
+      return;
+    }
+
+    store.addItem(categoryId, trimmedTitle);
   };
 
   const updateItem = (categoryId: string, itemId: string, newTitle: string) => {
-    store.updateItem(categoryId, itemId, newTitle);
+    const trimmedTitle = newTitle.trim();
+    if (!trimmedTitle) return;
+
+    const category = store.categories.find((cat) => cat.id === categoryId);
+    if (!category) return;
+
+    const exists = category.items.some(
+      (item) =>
+        item.id !== itemId &&
+        item.title.toLowerCase() === trimmedTitle.toLowerCase()
+    );
+    if (exists) {
+      alert('Item already exists in this category');
+      return;
+    }
+
+    store.updateItem(categoryId, itemId, trimmedTitle);
   };
 
   const toggleItem = (categoryId: string, itemId: string) => {

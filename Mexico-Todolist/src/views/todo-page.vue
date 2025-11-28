@@ -194,5 +194,4 @@ const handleDeleteItem = (categoryId: string, itemId: string) => {
       </div>
     </div>
   </div>
-  
 </template>

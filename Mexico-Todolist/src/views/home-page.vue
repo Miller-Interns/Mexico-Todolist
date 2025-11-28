@@ -66,7 +66,6 @@ button {
 </style>
 
 <template>
-
   <div class="landing-page">
     <div class="landing-card">
       <h1 class="trainee-name">Name of Trainee: Lawrence R. Mexico</h1>
@@ -74,5 +73,4 @@ button {
       <button class="btn-primary" @click="goToApp">Go to App</button>
     </div>
   </div>
-  
 </template>

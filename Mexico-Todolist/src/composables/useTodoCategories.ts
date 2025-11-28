@@ -19,14 +19,38 @@ export function useTodoCategories() {
   };
 
   const addCategory = (title: string) => {
-    if (!title.trim()) return;
-    store.addCategory(title);
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return;
+
+    const exists = store.categories.some(
+      (cat) => cat.title.toLowerCase() === trimmedTitle.toLowerCase()
+    );
+    if (exists) {
+      alert('Category already exists');
+      return;
+    }
+
+    store.addCategory(trimmedTitle);
     finishAdding();
   };
 
   const updateCategory = (categoryId: string, newTitle: string) => {
-    store.updateCategory(categoryId, newTitle);
+    const trimmedTitle = newTitle.trim();
+    if (!trimmedTitle) return;
+
+    const exists = store.categories.some(
+      (cat) =>
+        cat.id !== categoryId &&
+        cat.title.toLowerCase() === trimmedTitle.toLowerCase()
+    );
+    if (exists) {
+      alert('Category already exists');
+      return;
+    }
+
+    store.updateCategory(categoryId, trimmedTitle);
   };
+
 
   const confirmDeleteCategory = (categoryId: string) => {
     if (confirm("Are you sure you want to delete this category?")) {
