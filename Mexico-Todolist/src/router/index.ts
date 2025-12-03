@@ -1,23 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { RouteNames } from './route-names'
+import { RoutePaths } from './route-paths'
+
 import HomePage from '../views/home-page.vue'
-import ToDoPage from '../views/todo-page.vue'
+import TodoPage from '../views/todo-page.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
-
     {
-      path: '/',
-      name: 'home',
+      path: RoutePaths.HOME,
+      name: RouteNames.HOME,
       component: HomePage,
     },
-
     {
-      path: '/todo',
-      name: 'todo',
-      component: ToDoPage
+      path: RoutePaths.TODO,
+      name: RouteNames.TODO,
+      component: TodoPage,
     },
-
   ],
 })
 
