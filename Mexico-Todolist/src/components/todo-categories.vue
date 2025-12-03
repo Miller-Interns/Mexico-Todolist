@@ -8,7 +8,7 @@ import {
   PlusIcon
 } from "@heroicons/vue/24/solid";
 
-import type { TodoCategory } from '../types/Types';
+import type { TodoCategory } from '../types/todo';
 import TodoItem from '../components/todo-items.vue';
 
 const props = defineProps<{
