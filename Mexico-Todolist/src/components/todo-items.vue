@@ -7,7 +7,7 @@ import {
   XMarkIcon
 } from "@heroicons/vue/24/solid";
 
-import type { TodoItem } from '../types/todo';
+import type { TodoItem } from '../types/Todo';
 
 const props = defineProps<{
   item: TodoItem;

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { TodoCategory, TodoItem } from '../types/todo'
+import type { TodoCategory, TodoItem } from '../types/Todo'
 
 export const useTodoStore = defineStore('todo', () => {
   const categories = ref<TodoCategory[]>([])
