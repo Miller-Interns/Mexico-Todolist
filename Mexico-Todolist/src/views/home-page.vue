@@ -1,14 +1,28 @@
 <script setup lang="ts">
+
 import { useRouter } from "vue-router"
+import { RouteNames } from "../router/route-names";
 const router = useRouter()
 
 function goToApp() {
-  router.push("/todo")
+  router.push(RouteNames.TODO)
 }
+
 </script>
 
-<style>
+<template>
 
+  <div class="landing-page">
+    <div class="landing-card">
+      <h1 class="trainee-name">Name of Trainee: Lawrence R. Mexico</h1>
+      <p class="exercise-date">Exercise Started on: November 21, 2025</p>
+      <button class="btn-primary" @click="goToApp">Go to App</button>
+    </div>
+  </div>
+
+</template>
+
+<style>
 .landing-page {
   position: fixed;
   inset: 0;
@@ -62,15 +76,4 @@ button {
   background: #4338ca;
   border-color: #4338ca;
 }
-
 </style>
-
-<template>
-  <div class="landing-page">
-    <div class="landing-card">
-      <h1 class="trainee-name">Name of Trainee: Lawrence R. Mexico</h1>
-      <p class="exercise-date">Exercise Started on: November 21, 2025</p>
-      <button class="btn-primary" @click="goToApp">Go to App</button>
-    </div>
-  </div>
-</template>

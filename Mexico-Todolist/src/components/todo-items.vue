@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
-import type { TodoItem } from '../types/TodoTypes';
+import {
+  PencilIcon,
+  TrashIcon,
+  CheckIcon,
+  XMarkIcon
+} from "@heroicons/vue/24/solid";
+
+import type { TodoItem } from '../types/Todo';
 
 const props = defineProps<{
   item: TodoItem;
@@ -36,8 +43,41 @@ const saveEdit = () => {
 };
 </script>
 
-<style scoped>
+<template>
 
+  <div class="todo-item" :class="{ completed: item.completed }">
+    <div v-if="!isEditing" class="item-view">
+      <input type="checkbox" :checked="item.completed" @change="$emit('toggle', item.id)" class="checkbox" />
+
+      <span class="item-title" @dblclick="startEdit">{{ item.title }}</span>
+
+      <div class="item-actions">
+        <button @click="startEdit" class="icon-btn edit">
+          <PencilIcon class="icon" />
+        </button>
+
+        <button @click="$emit('delete', item.id)" class="icon-btn delete">
+          <TrashIcon class="icon" />
+        </button>
+      </div>
+    </div>
+
+    <div v-else class="item-edit">
+      <input v-model="editTitle" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" ref="editInput" class="edit-input" />
+
+      <button @click="saveEdit" class="icon-btn save">
+        <CheckIcon class="icon" />
+      </button>
+
+      <button @click="cancelEdit" class="icon-btn cancel">
+        <XMarkIcon class="icon" />
+      </button>
+    </div>
+  </div>
+
+</template>
+
+<style scoped>
 .todo-item {
   display: flex;
   flex-direction: column;
@@ -78,90 +118,69 @@ const saveEdit = () => {
   gap: 0.5rem;
 }
 
-button {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.85rem;
-  border-radius: 6px;
+.icon-btn {
+  border: none;
+  background: none;
+  padding: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-save {
-  background: #4f46e5;
-  color: #ffffff;
-  border: 1px solid #4f46e5;
+.icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
-.btn-save:hover {
-  background: #4338ca;
+.icon-btn.edit:hover {
+  background: #eef2ff;
 }
 
-.btn-cancel,
-.btn-edit {
-  background: #e5e7eb;
-  border: 1px solid #d1d5db;
-  color: #111827;
-}
-
-.btn-cancel:hover,
-.btn-edit:hover {
-  background: #d1d5db;
-}
-
-.btn-delete {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
+.icon-btn.delete {
   color: #b91c1c;
 }
 
-.btn-delete:hover {
+.icon-btn.delete:hover {
   background: #fee2e2;
+}
+
+.icon-btn.save {
+  background: #4f46e5;
+  color: white;
+}
+
+.icon-btn.save:hover {
+  background: #4338ca;
+}
+
+.icon-btn.cancel {
+  background: #e5e7eb;
+}
+
+.icon-btn.cancel:hover {
+  background: #d1d5db;
 }
 
 .item-edit {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .edit-input {
   flex: 1;
+  min-width: 0;
+  max-width: 100%;
   padding: 0.5rem;
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background: #ffffff;
   color: #111827;
-  min-width: 180px;
+  box-sizing: border-box;
 }
 </style>
-
-<template>
-
-  <div class="todo-item" :class="{ completed: item.completed }">
-    <div v-if="!isEditing" class="item-view">
-      <input 
-        type="checkbox" 
-        :checked="item.completed"
-        @change="$emit('toggle', item.id)"
-        class="checkbox"
-      />
-      <span class="item-title" @dblclick="startEdit">{{ item.title }}</span>
-      <div class="item-actions">
-        <button @click="startEdit" class="btn-edit">Edit</button>
-        <button @click="$emit('delete', item.id)" class="btn-delete">Delete</button>
-      </div>
-    </div>
-    
-    <div v-else class="item-edit">
-      <input 
-        v-model="editTitle"
-        @keyup.enter="saveEdit"
-        @keyup.esc="cancelEdit"
-        ref="editInput"
-        class="edit-input"
-      />
-      <button @click="saveEdit" class="btn-save">Save</button>
-      <button @click="cancelEdit" class="btn-cancel">Cancel</button>
-    </div>
-  </div>
-  
-</template>
