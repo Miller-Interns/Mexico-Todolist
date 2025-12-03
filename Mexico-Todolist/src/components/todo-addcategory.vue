@@ -9,10 +9,11 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    (e: "start"): void;
-    (e: "save", title: string): void;
-    (e: "cancel"): void;
+    start: [];
+    save: [title: string];
+    cancel: [];
 }>();
+
 
 const localTitle = ref(props.newTitle);
 const inputRef = ref<HTMLInputElement | null>(null);
